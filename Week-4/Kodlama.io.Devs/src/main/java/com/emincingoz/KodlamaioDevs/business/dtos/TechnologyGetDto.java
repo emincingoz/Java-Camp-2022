@@ -7,7 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ProgrammingLanguageGetDto {
+public class TechnologyGetDto {
     private Long id;
     private String name;
+    private Long languageId;
 }

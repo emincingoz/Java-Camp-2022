@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,18 +24,18 @@ public class ProgrammingLanguageManager implements IProgrammingLanguageService {
 
     @Override
     public List<ProgrammingLanguageGetDto> getProgrammingLanguages() {
-        List<ProgrammingLanguage> programmingLanguages = programmingLanguageRepository.getAll();
+        List<ProgrammingLanguage> programmingLanguages = programmingLanguageRepository.findAll();
         return modelMapper.map(programmingLanguages, new TypeToken<List<ProgrammingLanguageGetDto>>() {}.getType());
     }
 
     @Override
     public ProgrammingLanguageGetDto getProgrammingLanguageById(Long id) throws Exception {
-        ProgrammingLanguage programmingLanguage = programmingLanguageRepository.getById(id);
+        Optional<ProgrammingLanguage> programmingLanguage = programmingLanguageRepository.findById(id);
 
-        if (programmingLanguage == null)
+        if (programmingLanguage.isEmpty())
             throw new Exception("No programming language found with the specified id");
 
-        return modelMapper.map(programmingLanguage, ProgrammingLanguageGetDto.class);
+        return modelMapper.map(programmingLanguage.get(), ProgrammingLanguageGetDto.class);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class ProgrammingLanguageManager implements IProgrammingLanguageService {
 
         ProgrammingLanguage programmingLanguage = modelMapper.map(programmingLanguageCreateRequest, ProgrammingLanguage.class);
 
-        programmingLanguageRepository.add(programmingLanguage);
+        programmingLanguageRepository.save(programmingLanguage);
     }
 
     @Override
@@ -72,11 +73,11 @@ public class ProgrammingLanguageManager implements IProgrammingLanguageService {
         ProgrammingLanguageGetDto programmingLanguageGetDto = getProgrammingLanguageById(id);
         programmingLanguageGetDto.setName(programmingLanguageUpdateRequest.getName());
 
-        programmingLanguageRepository.update(modelMapper.map(programmingLanguageGetDto, ProgrammingLanguage.class));
+        programmingLanguageRepository.save(modelMapper.map(programmingLanguageGetDto, ProgrammingLanguage.class));
     }
 
     private boolean isNameExists(String name) {
-        for (ProgrammingLanguage programmingLanguage : programmingLanguageRepository.getAll()) {
+        for (ProgrammingLanguage programmingLanguage : programmingLanguageRepository.findAll()) {
             if (programmingLanguage.getName().equals(name))
                 return true;
         }
@@ -84,7 +85,7 @@ public class ProgrammingLanguageManager implements IProgrammingLanguageService {
     }
 
     private boolean isIdExists(Long id) {
-        for (ProgrammingLanguage programmingLanguage : programmingLanguageRepository.getAll()) {
+        for (ProgrammingLanguage programmingLanguage : programmingLanguageRepository.findAll()) {
             if (Objects.equals(programmingLanguage.getId(), id))
                 return true;
         }

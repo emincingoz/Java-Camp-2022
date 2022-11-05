@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Repository
-public class InMemoryProgrammingLanguageRepository implements IProgrammingLanguageRepository {
+//@Repository
+public class InMemoryProgrammingLanguageRepository/* implements IProgrammingLanguageRepository */{
 
-    List<ProgrammingLanguage> programmingLanguages;
+    /*List<ProgrammingLanguage> programmingLanguages;
 
     public InMemoryProgrammingLanguageRepository() {
-        programmingLanguages = new ArrayList<ProgrammingLanguage>();
+        /*programmingLanguages = new ArrayList<ProgrammingLanguage>();
         programmingLanguages.add(new ProgrammingLanguage(1L, "C#"));
         programmingLanguages.add(new ProgrammingLanguage(2L, "Java"));
         programmingLanguages.add(new ProgrammingLanguage(3L, "Python"));
@@ -52,5 +52,5 @@ public class InMemoryProgrammingLanguageRepository implements IProgrammingLangua
                 language.setName(programmingLanguage.getName());
             }
         }
-    }
+    }*/
 }
