@@ -1,0 +1,30 @@
+name: kodlamaio
+version: "3.8"
+services:
+  # ---------------  PostgreSQL ---------------
+  db:
+    build:
+      context: postgresql
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: kodlamaio
+      POSTGRES_PASSWORD: kodlamaio
+      POSTGRES_DB: kodlamaio
+    volumes:
+      - postgre_volume:/var/lib/postgresql/data"
+
+  # ---------------  PGADMIN ---------------
+  pgAdmin:
+    image: dpage/pgadmin4:6.9
+    ports:
+      - 8083:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: library.ms@hotmail.com
+      PGADMIN_DEFAULT_PASSWORD: libraryms
+    restart: always
+
+volumes:
+  postgre_volume:
